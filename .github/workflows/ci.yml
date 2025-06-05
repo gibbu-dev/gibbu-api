@@ -42,7 +42,7 @@ jobs:
         files: '**/build/test-results/test/TEST-*.xml'
         
     - name: Build 결과를 Slack 채널에 공유합니다.
-    - uses: 8398a7/action-slack@v3
+      uses: 8398a7/action-slack@v3
       with:
         status: ${{ job.status }}
         author_name: 백엔드 빌드 결과 알림
