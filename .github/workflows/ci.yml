@@ -45,7 +45,7 @@ jobs:
     name: Docker 이미지를 빌드하고 Push합니다.
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    if: startsWith(github.head_ref, 'feat/') || github.event_name == 'push'
 
     steps:
     - uses: actions/checkout@v4
