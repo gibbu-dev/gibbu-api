@@ -73,13 +73,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Docker 이미지 빌드 및 Docker Hub Push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
         context: .
         file: ./Dockerfile
         push: true
         tags: |
-          ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.ref_name }}
+          ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.sha }}
           ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:latest
 
     - name: Push 결과를 Slack 채널에 공유합니다.
