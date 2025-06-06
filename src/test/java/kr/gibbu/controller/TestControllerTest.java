@@ -20,7 +20,7 @@ class TestControllerTest {
   @DisplayName("ci 테스트가 성공적으로 수행된다.")
   void continuousIntegrationTest() throws Exception {
     // given
-    String targetUrl = "http://localhost:8080/test";
+    String targetUrl = "/test";
     String expectedResponse = "ci test success";
 
     // when & then
