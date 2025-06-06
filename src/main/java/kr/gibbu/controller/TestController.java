@@ -11,4 +11,8 @@ public class TestController {
     return "ci test success";
   }
 
+  @GetMapping("/hello")
+  public String hello() {
+    return "hello gibbu";
+  }
 }
