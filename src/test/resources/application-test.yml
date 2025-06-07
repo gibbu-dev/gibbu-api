@@ -1,15 +1,10 @@
 spring:
-  # .env file config
-  config:
-    import:
-      - optional:file:.env[.properties]
-
   # Test DB config
   datasource:
-    url: ${TEST_DB_URL}
-    username: ${TEST_DB_USERNAME}
-    password: ${TEST_DB_PASSWORD}
-    driver-class-name: ${TEST_DB_DRIVER_CLASS_NAME}
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   # Spring data JPA config
   jpa:
