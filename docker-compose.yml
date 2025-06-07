@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  gibbu-db:
+    image: postgres:15
+    container_name: gibbu-db
+    networks:
+      - gibbu-net
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TZ: "Asia/Seoul"
+    ports:
+      - "5432:5432"
+    volumes:
+      - gibbu-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  gibbu-app:
+    image: ${DOCKER_IMAGE_REPOSITORY}
+    container_name: gibbu-app
+    networks:
+      - gibbu-net
+    depends_on:
+      gibbu-db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${SERVER_HOST}:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${APP_DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${APP_DB_PASSWORD}
+      TZ: "Asia/Seoul"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    restart: unless-stopped
+
+volumes:
+  gibbu-db-data:
+    driver: local
+
+networks:
+  gibbu-net:
+    driver: bridge
