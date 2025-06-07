@@ -7,7 +7,7 @@ spring:
 
   # Prod DB config
   datasource:
-    url: ${DATABASE.PROD.url:jdbc}
+    url: ${DATABASE.PROD.url}
     username: ${DATABASE.PROD.username}
     password: ${DATABASE.PROD.password}
     driver-class-name: ${DATABASE.PROD.driver-class-name}
