@@ -28,4 +28,17 @@ class TestControllerTest {
         .andExpect(status().isOk())
         .andExpect(content().string(expectedResponse));
   }
+
+  @Test
+  @DisplayName("ci 테스트가 성공적으로 수행된다.")
+  void continuousIntegrationHelloTest() throws Exception {
+    // given
+    String targetUrl = "/hello";
+    String expectedResponse = "hello gibbu";
+
+    // when & then
+    mockMvc.perform(get(targetUrl))
+        .andExpect(status().isOk())
+        .andExpect(content().string(expectedResponse));
+  }
 }
