@@ -79,8 +79,8 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.sha }}
-          ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+          ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.sha }}
+          ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
 
     - name: Push 결과를 Slack 채널에 공유합니다.
       uses: 8398a7/action-slack@v3
