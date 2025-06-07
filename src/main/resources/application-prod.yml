@@ -1,17 +1,18 @@
 spring:
   config:
-    # Profile config
+    import:
+      - application-secret.yml
     activate:
-      on-profile: prd
+      on-profile: prod
 
-  # Local DB config
+  # Prod DB config
   datasource:
-    url: ${PROD_DB_URL}
-    username: ${PROD_DB_USERNAME}
-    password: ${PROD_DB_PASSWORD}
-    driver-class-name: ${PROD_DB_DRIVER_CLASS_NAME}
+    url: ${DATABASE.PROD.url}
+    username: ${DATABASE.PROD.username}
+    password: ${DATABASE.PROD.password}
+    driver-class-name: ${DATABASE.PROD.driver-class-name}
 
-  # Local JPA config
+  # Prod JPA config
   jpa:
     hibernate:
       ddl-auto: none

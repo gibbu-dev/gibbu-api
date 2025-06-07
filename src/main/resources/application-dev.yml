@@ -3,16 +3,16 @@ spring:
     import:
       - application-secret.yml
     activate:
-      on-profile: local
+      on-profile: dev
 
-  # Local DB config
+  # Dev DB config
   datasource:
-    url: ${DATABASE.LOCAL.url}
-    username: ${DATABASE.LOCAL.username}
-    password: ${DATABASE.LOCAL.password}
-    driver-class-name: ${DATABASE.LOCAL.driver-class-name}
+    url: ${DATABASE.DEV.url}
+    username: ${DATABASE.DEV.username}
+    password: ${DATABASE.DEV.password}
+    driver-class-name: ${DATABASE.DEV.driver-class-name}
 
-  # Local JPA config
+  # Dev JPA config
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -28,3 +28,6 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
+
+server:
+  port: 8081

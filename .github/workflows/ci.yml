@@ -45,7 +45,7 @@ jobs:
     name: Docker 이미지를 빌드하고 Push합니다.
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    if: startsWith(github.head_ref, 'feat/') || github.event_name == 'push'
 
     steps:
     - uses: actions/checkout@v4
@@ -60,6 +60,9 @@ jobs:
     - name: Gradle 명령 실행을 위한 권한 부여
       run: chmod +x gradlew
 
+    - name: application-secret.yml 파일 생성
+      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application-secret.yml
+
     - name: Gradle build 실행
       run: ./gradlew build -x test
 
@@ -67,20 +70,20 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Docker Login을 수행합니다.
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Docker 이미지 빌드 및 Docker Hub Push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
         context: .
         file: ./Dockerfile
         push: true
         tags: |
-          ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.ref_name }}
-          ${{ secrets.DOCKER_USER }}/${{ secrets.DOCKER_REPOSITORY }}:latest
+          ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:${{ github.sha }}
+          ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}:latest
 
     - name: Push 결과를 Slack 채널에 공유합니다.
       uses: 8398a7/action-slack@v3
